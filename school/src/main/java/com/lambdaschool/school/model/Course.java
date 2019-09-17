@@ -1,6 +1,7 @@
 package com.lambdaschool.school.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import io.swagger.annotations.ApiModelProperty;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -10,17 +11,21 @@ import java.util.List;
 @Table(name = "course")
 public class Course
 {
+    @ApiModelProperty(name = "courseid", value = "primary key for Courses", required = true, example = "1")
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long courseid;
 
+    @ApiModelProperty(name = "name", value = "Name of Course", required = true, example = "Some Name")
     private String coursename;
 
+    @ApiModelProperty(name = "instructid", value = "Instructor ID", required = true, example = "1")
     @ManyToOne
     @JoinColumn(name = "instructid")
     @JsonIgnoreProperties("courses")
     private Instructor instructor;
 
+    @ApiModelProperty(name = "studentsCourse", value = "Students in Course", required = true, example = "Some Name, Some Name...")
     @ManyToMany(mappedBy = "courses")
     @JsonIgnoreProperties("courses")
     private List<Student> students = new ArrayList<>();
