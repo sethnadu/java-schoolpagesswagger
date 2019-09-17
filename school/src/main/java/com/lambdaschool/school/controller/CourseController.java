@@ -8,6 +8,7 @@ import com.lambdaschool.school.view.CountStudentsInCourses;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,7 +30,7 @@ public class CourseController
     @ApiResponses(value = {@ApiResponse(code = 200, message = "All Course's Found", response = Course.class),
             @ApiResponse(code = 404, message = "Course's Not Found", response = ErrorDetail.class)})
     @GetMapping(value = "/courses", produces = {"application/json"})
-    public ResponseEntity<?> listAllCoursesWithPaging(@PageableDefault(page = 0, size = 3)Pageable pageable)
+    public ResponseEntity<?> listAllCoursesWithPaging(@PageableDefault(page = 0, size = 3, sort = {"coursename"}, direction = Sort.Direction.ASC)Pageable pageable)
     {
         ArrayList<Course> myCourses = courseService.findAll(pageable);
         return new ResponseEntity<>(myCourses, HttpStatus.OK);

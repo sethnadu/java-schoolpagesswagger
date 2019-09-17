@@ -7,6 +7,7 @@ import com.lambdaschool.school.service.StudentService;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -35,7 +36,7 @@ public class StudentController
                                @ApiImplicitParam(name = "size", dataType = "integer", paramType = "query", value = "Results of records per page"),
                                @ApiImplicitParam(name = "sort", allowMultiple = true, dataType = "string", paramType = "query", value = "Sorting criteria in the format: property(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.")})
     @GetMapping(value = "/students", produces = {"application/json"})
-    public ResponseEntity<?> listAllStudentsWithPaging(@PageableDefault(page = 0, size = 3)Pageable pageable)
+    public ResponseEntity<?> listAllStudentsWithPaging(@PageableDefault(page = 0, size = 3, sort = {"studname"}, direction = Sort.Direction.ASC)Pageable pageable)
     {
         List<Student> myStudents = studentService.findAll(pageable);
         return new ResponseEntity<>(myStudents, HttpStatus.OK);
